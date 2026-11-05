@@ -1,0 +1,792 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Dompteur iPad 2 (Copy)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout : une « scène » plein écran pour vidéoprojection (16:9), bandeau marine en haut, écrans qui se remplacent. Thème unique et volontaire aux couleurs Beaucamps. */
+:root{
+  --navy:#231657; --navy-2:#3a2a86; --navy-ink:#150c3a;
+  --gold:#DBA94A; --gold-deep:#a97a1f; --gold-soft:#f6ecd6;
+  --white:#ffffff; --mist:#f1f0f7; --line:#dcd9ea; --muted:#5d5880;
+  --ok:#2f8a5b;
+  --f-display:"Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", Verdana, system-ui, sans-serif;
+  color-scheme: light;
+  font-size: clamp(15px, 0.9vw + 0.55vh, 26px);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--mist);color:var(--navy-ink);font-family:var(--f-body);line-height:1.45;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--navy)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+a{color:var(--navy-2)}
+
+/* ---------- Bandeau ---------- */
+.bar{background:var(--navy);color:var(--white);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  padding-block:.55rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.brand{display:flex;flex-direction:column;line-height:1.1;margin-right:auto}
+.brand b{font-family:var(--f-display);font-weight:800;letter-spacing:.01em;font-size:1.05rem}
+.brand span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.nav{display:flex;gap:.35rem;flex-wrap:wrap}
+.nav button{background:transparent;border:2px solid transparent;color:var(--white);padding:.35rem .8rem;border-radius:999px;font-weight:700;font-size:.85rem}
+.nav button:hover{border-color:rgba(219,169,74,.5)}
+.nav button[aria-current="true"]{background:var(--gold);color:var(--navy)}
+.tools{display:flex;gap:.5rem;align-items:center}
+.pct{display:flex;align-items:center;gap:.45rem;font-size:.8rem;font-variant-numeric:tabular-nums}
+.pct svg{width:2rem;height:2rem}
+.iconbtn{background:var(--navy-2);border:0;color:var(--white);border-radius:.6rem;padding:.4rem .6rem;font-size:.8rem;font-weight:700}
+
+main{flex:1;min-height:0;overflow:auto;padding-block:1.2rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.screen{max-width:1500px;margin:0 auto;min-height:100%}
+
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.08}
+.eyebrow{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--gold-deep)}
+.btn{border:0;border-radius:.8rem;padding:.75rem 1.2rem;font-weight:700;display:inline-flex;align-items:center;gap:.5rem}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn-gold:hover{background:#e6b95d}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-2)}
+.btn-ghost{background:var(--white);color:var(--navy);border:2px solid var(--line)}
+.btn-ghost:hover{border-color:var(--navy)}
+
+/* ---------- Accueil ---------- */
+.home{display:grid;grid-template-columns:1.25fr 1fr;gap:2.5rem;align-items:center;min-height:100%}
+.home h1{font-size:clamp(2.6rem,5.2vw,6rem);font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-block:.4rem .6rem}
+.home h1 em{font-style:normal;color:var(--gold-deep)}
+.home .lead{font-size:1.35rem;max-width:32ch;margin:0 0 1.4rem}
+.home .row{display:flex;gap:.7rem;flex-wrap:wrap}
+.pass{margin-top:1.6rem;display:flex;gap:.8rem;align-items:center;background:var(--white);border:2px dashed var(--gold);border-radius:1rem;padding:.8rem 1rem;max-width:36rem}
+.pass svg{flex:none;width:2.6rem;height:2.6rem}
+.pass p{margin:0;font-size:.95rem}
+.medal{width:100%;max-width:520px;justify-self:center}
+.medal .spin{transform-origin:200px 215px;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Carte des missions ---------- */
+.maphead{display:flex;align-items:end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.maphead h2{font-size:2.2rem;color:var(--navy)}
+.maphead p{margin:.3rem 0 0;color:var(--muted)}
+.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.group{background:var(--white);border-radius:1rem;padding:.9rem;display:flex;flex-direction:column;gap:.6rem;border:1px solid var(--line)}
+.group h3{font-size:1.05rem;display:flex;align-items:center;gap:.5rem;color:var(--navy)}
+.group h3 svg{width:1.4rem;height:1.4rem;flex:none}
+.tiles{display:grid;gap:.5rem}
+.tile{display:grid;grid-template-columns:2.6rem 1fr auto;align-items:center;gap:.7rem;text-align:left;background:var(--mist);border:2px solid transparent;border-radius:.8rem;padding:.55rem .7rem;color:var(--navy-ink)}
+.tile:hover{border-color:var(--navy)}
+.tile .num{font-family:var(--f-display);font-weight:800;font-size:1.3rem;color:var(--white);background:var(--navy);border-radius:.6rem;display:grid;place-items:center;height:2.6rem;font-variant-numeric:tabular-nums}
+.tile .lbl{font-weight:700;font-size:.95rem;line-height:1.2}
+.tile .chk{width:1.6rem;height:1.6rem;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:transparent;font-weight:800}
+.tile.done{background:var(--gold-soft)}
+.tile.done .num{background:var(--gold);color:var(--navy)}
+.tile.done .chk{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+
+/* ---------- Mission ---------- */
+.mission{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:1.5rem;align-items:start}
+.mtop{grid-column:1/-1;display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap}
+.mnum{font-family:var(--f-display);font-weight:800;font-size:3.4rem;line-height:1;color:var(--gold);background:var(--navy);border-radius:1.1rem;min-width:5.2rem;text-align:center;padding:.6rem .7rem;font-variant-numeric:tabular-nums}
+.mtitle{flex:1;min-width:0}
+.mtitle h2{font-size:clamp(1.6rem,2.3vw,2.6rem);color:var(--navy)}
+.mnav{display:flex;gap:.5rem}
+.col{display:flex;flex-direction:column;gap:1rem;min-width:0}
+.why{font-size:1.15rem;margin:0;background:var(--white);border-left:6px solid var(--gold);padding:.8rem 1rem;border-radius:0 .8rem .8rem 0}
+.path{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem}
+.path span{background:var(--navy);color:var(--white);padding:.35rem .75rem;border-radius:.5rem;font-weight:700;font-size:.92rem}
+.path i{color:var(--gold-deep);font-style:normal;font-weight:800}
+.visual{background:var(--white);border-radius:1rem;padding:1rem;border:1px solid var(--line)}
+.visual svg{display:block;width:100%;height:auto;max-height:38vh}
+.vcap{font-size:.85rem;color:var(--muted);margin:.5rem 0 0}
+.res{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;font-size:.9rem}
+.res a{display:inline-flex;align-items:center;gap:.4rem;background:var(--white);border:2px solid var(--line);border-radius:.6rem;padding:.4rem .7rem;text-decoration:none;font-weight:700;color:var(--navy)}
+.res a:hover{border-color:var(--navy)}
+
+.steps{background:var(--white);border-radius:1rem;padding:1rem 1.1rem;border:1px solid var(--line)}
+.steps h3{font-size:1.25rem;color:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap}
+.steps h3 small{font-family:var(--f-body);font-weight:400;font-size:.8rem;color:var(--muted)}
+.steps ol{list-style:none;margin:.8rem 0 0;padding:0;display:grid;gap:.55rem;counter-reset:s}
+.steps li{display:grid;grid-template-columns:2.1rem 1fr;gap:.7rem;align-items:start;font-size:1.08rem;counter-increment:s;transition:opacity .35s, transform .35s}
+.steps li::before{content:counter(s);font-family:var(--f-display);font-weight:800;background:var(--gold);color:var(--navy);border-radius:50%;width:2.1rem;height:2.1rem;display:grid;place-items:center}
+.steps li.veiled{opacity:.12;transform:translateX(.5rem);filter:blur(3px)}
+.steps .ctrl{display:flex;gap:.5rem;margin-top:.9rem;flex-wrap:wrap}
+.tip{background:var(--gold-soft);border-radius:.8rem;padding:.7rem .9rem;font-size:.95rem;margin:0}
+.tip b{color:var(--gold-deep)}
+.defi{background:var(--navy);color:var(--white);border-radius:1rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.7rem}
+.defi .eyebrow{color:var(--gold)}
+.defi p{margin:0;font-size:1.15rem}
+.defi .row{display:flex;gap:.5rem;flex-wrap:wrap}
+.valid{background:transparent;color:var(--white);border:2px solid var(--gold)}
+.valid[aria-pressed="true"]{background:var(--gold);color:var(--navy)}
+
+/* démos */
+.chips{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.7rem}
+.chips button{border:2px solid var(--navy);background:var(--white);color:var(--navy);border-radius:999px;padding:.35rem .8rem;font-weight:700;font-size:.9rem}
+.chips button[aria-pressed="true"]{background:var(--navy);color:var(--white)}
+.doc{font-size:1rem;line-height:1.6;background:var(--mist);border-radius:.6rem;padding:.8rem 1rem;margin:.6rem 0 0}
+.doc mark{background:var(--gold);color:var(--navy-ink);border-radius:.2rem;padding:0 .1rem}
+.search{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.search input{font:inherit;border:2px solid var(--navy);border-radius:.6rem;padding:.4rem .7rem;min-width:0;flex:1}
+.search output{font-weight:700;font-variant-numeric:tabular-nums;color:var(--navy)}
+.speak{display:grid;gap:.5rem}
+.speak .line{display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:center;background:var(--mist);border-radius:.6rem;padding:.5rem .7rem}
+.speak .line button{border:0;background:var(--navy);color:var(--white);border-radius:.5rem;padding:.35rem .7rem;font-weight:700;font-size:.85rem}
+.speak .flag{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;display:block}
+.fn{display:grid;gap:.5rem}
+.fn button{text-align:left;border:2px solid var(--line);background:var(--mist);border-radius:.6rem;padding:.55rem .8rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95rem;color:var(--navy-ink);overflow-wrap:anywhere}
+.fn button.good{border-color:var(--ok);background:#e3f3ea}
+.fn button.bad{border-color:#b9475a;background:#f8e5e8}
+.fn .verdict{min-height:1.5em;font-weight:700;margin:0}
+.cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+.cards3 div{background:var(--mist);border-radius:.7rem;padding:.7rem}
+.cards3 b{font-family:var(--f-display);color:var(--navy);display:block;font-size:1.05rem;margin-bottom:.2rem}
+.cards3 p{margin:0;font-size:.88rem}
+.gmail{display:grid;gap:.6rem}
+.gbar{display:flex;align-items:center;gap:.6rem;background:var(--mist);border-radius:999px;padding:.55rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1rem;overflow-wrap:anywhere}
+.gbar .caret{display:inline-block;width:2px;height:1.1em;background:var(--navy);vertical-align:middle;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ---------- Roue ---------- */
+.roue{display:grid;place-items:center;text-align:center;gap:1.4rem;min-height:100%;align-content:center}
+.drum{background:var(--navy);color:var(--white);border-radius:1.6rem;padding:2rem 2.4rem;width:min(100%,58rem);border:6px solid var(--gold);box-shadow:0 1.2rem 0 -0.6rem rgba(35,22,87,.18)}
+.drum .n{font-family:var(--f-display);font-weight:800;font-size:clamp(4rem,9vw,9rem);line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+.drum .t{font-size:clamp(1.3rem,2.2vw,2.3rem);font-weight:700;margin-top:.5rem;min-height:2.6em;text-wrap:balance}
+.drum.rolling .n,.drum.rolling .t{opacity:.85}
+.roue .row{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
+.roue .note{color:var(--muted);margin:0}
+
+/* ---------- Quiz ---------- */
+.quiz{display:grid;grid-template-columns:minmax(0,1fr) 16rem;gap:1.5rem;align-items:start}
+.qcard{background:var(--white);border-radius:1.2rem;padding:1.6rem 1.8rem;border:1px solid var(--line);display:flex;flex-direction:column;gap:1rem}
+.qcard h2{font-size:clamp(1.7rem,2.8vw,3rem);color:var(--navy)}
+.qans{background:var(--gold-soft);border-radius:.9rem;padding:1rem 1.2rem}
+.qans b{font-family:var(--f-display);font-size:1.5rem;color:var(--navy);display:block}
+.qans p{margin:.4rem 0 0}
+.qctrl{display:flex;gap:.6rem;flex-wrap:wrap}
+.score{display:grid;gap:.8rem}
+.team{border-radius:1rem;padding:1rem;text-align:center;display:grid;gap:.5rem}
+.team.or{background:var(--gold);color:var(--navy)}
+.team.bleu{background:var(--navy);color:var(--white)}
+.team .pts{font-family:var(--f-display);font-weight:800;font-size:3.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.team .lab{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+.team .pm{display:flex;gap:.4rem;justify-content:center}
+.team .pm button{border:0;border-radius:.5rem;padding:.3rem .8rem;font-weight:800;background:rgba(255,255,255,.85);color:var(--navy)}
+.qdots{display:flex;gap:.3rem;flex-wrap:wrap}
+.qdots i{width:.8rem;height:.8rem;border-radius:50%;background:var(--line)}
+.qdots i.on{background:var(--gold)}
+.qdots i.cur{background:var(--navy)}
+
+/* ---------- Chrono ---------- */
+.timer{position:fixed;inset:0;background:rgba(21,12,58,.92);display:grid;place-items:center;z-index:20;color:var(--white);text-align:center;padding:max(16px,env(safe-area-inset-left,0px))}
+.timer .big{font-family:var(--f-display);font-weight:800;font-size:clamp(6rem,22vw,20rem);line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+.timer .big.end{color:var(--white);animation:pulse .6s ease-in-out 4}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.timer .row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.timer p{font-size:1.4rem;max-width:40ch;margin:0 auto .5rem}
+
+.kbd{font-size:.78rem;color:var(--muted);text-align:center;margin-top:1rem}
+.kbd kbd{background:var(--white);border:1px solid var(--line);border-radius:.3rem;padding:0 .35rem;font-family:inherit}
+
+@media (max-width: 1000px){
+  .groups{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mission,.home,.quiz{grid-template-columns:1fr}
+  .medal{max-width:300px}
+}
+@media (max-width: 640px){
+  .groups,.cards3{grid-template-columns:1fr}
+  .nav button{padding:.3rem .55rem}
+  .mnum{font-size:2.4rem;min-width:3.8rem}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+<header class="bar">
+  <div class="brand"><span>Beaucamps Sainte Marie · EduLab</span><b>Je prends mon iPad en main</b></div>
+  <nav class="nav" aria-label="Écrans">
+    <button id="nav-home" data-go="home">Accueil</button>
+    <button id="nav-map" data-go="map">Missions</button>
+    <button id="nav-roue" data-go="roue">Roue</button>
+    <button id="nav-quiz" data-go="quiz">Quiz</button>
+  </nav>
+  <div class="tools">
+    <div class="pct" title="Missions validées par la classe">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" fill="none" stroke="#3a2a86" stroke-width="5"/><circle id="ring" cx="18" cy="18" r="15" fill="none" stroke="#DBA94A" stroke-width="5" stroke-linecap="round" stroke-dasharray="0 94.25" transform="rotate(-90 18 18)"/></svg>
+      <span id="pctTxt">0 %</span>
+    </div>
+    <button class="iconbtn" id="fs" title="Plein écran (F)">Plein écran</button>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Accueil -->
+  <section class="screen" id="s-home">
+    <div class="home">
+      <div>
+        <div class="eyebrow">4e · Formation iPad · Niveau 2</div>
+        <h1>Deviens <em>dompteur</em> d'iPad</h1>
+        <p class="lead">19 missions pour apprivoiser ton iPad : photos, réglages, applis du collège, Pages, Classroom et travail à plusieurs.</p>
+        <div class="row">
+          <button class="btn btn-gold" id="go-map">Voir les missions</button>
+          <button class="btn btn-navy" id="go-roue">Tirer une mission au sort</button>
+          <button class="btn btn-ghost" id="go-quiz">Quiz éclair</button>
+        </div>
+        <div class="pass">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#DBA94A"/><text x="20" y="27" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="20" fill="#231657">1</text></svg>
+          <p><b>Laissez-passer :</b> pour entrer dans le niveau 2, il faut avoir obtenu le badge <b>Dompteur iPad 1</b>.</p>
+        </div>
+      </div>
+      <svg class="medal" viewBox="0 0 400 430" role="img" aria-label="Badge Dompteur iPad niveau 2">
+        <path d="M130 10 L190 150 L150 170 L90 30Z" fill="#231657"/>
+        <path d="M270 10 L210 150 L250 170 L310 30Z" fill="#3a2a86"/>
+        <g class="spin">
+          <circle cx="200" cy="215" r="170" fill="#DBA94A"/>
+          <circle cx="200" cy="215" r="170" fill="none" stroke="#231657" stroke-width="4" stroke-dasharray="3 11"/>
+        </g>
+        <circle cx="200" cy="215" r="138" fill="#231657"/>
+        <defs><path id="arc" d="M90 215 A110 110 0 0 1 310 215"/></defs>
+        <text font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="27" letter-spacing="5" fill="#DBA94A"><textPath href="#arc" startOffset="50%" text-anchor="middle">DOMPTEUR IPAD</textPath></text>
+        <rect x="150" y="200" width="100" height="136" rx="14" fill="#ffffff"/>
+        <rect x="160" y="212" width="80" height="108" rx="5" fill="#f1f0f7"/>
+        <circle cx="200" cy="328" r="4" fill="#231657"/>
+        <text x="200" y="300" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="96" fill="#231657">2</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Carte -->
+  <section class="screen" id="s-map" hidden>
+    <div class="maphead">
+      <div>
+        <div class="eyebrow">La carte des missions</div>
+        <h2>Choisis une mission</h2>
+        <p>Les numéros sont ceux de ta fiche. Une mission validée par la classe passe en or.</p>
+      </div>
+      <button class="btn btn-ghost" id="reset">Remettre à zéro</button>
+    </div>
+    <div class="groups" id="groups"></div>
+    <p class="kbd">Clavier : <kbd>←</kbd> <kbd>→</kbd> étapes · <kbd>Espace</kbd> étape suivante · <kbd>Échap</kbd> retour aux missions · <kbd>F</kbd> plein écran</p>
+  </section>
+
+  <!-- Mission -->
+  <section class="screen" id="s-mission" hidden>
+    <div class="mission">
+      <div class="mtop">
+        <div class="mnum" id="m-num">1</div>
+        <div class="mtitle">
+          <div class="eyebrow" id="m-group"></div>
+          <h2 id="m-title"></h2>
+        </div>
+        <div class="mnav">
+          <button class="btn btn-ghost" id="m-prev" aria-label="Mission précédente">‹</button>
+          <button class="btn btn-ghost" id="m-next" aria-label="Mission suivante">›</button>
+        </div>
+      </div>
+      <div class="col">
+        <p class="why" id="m-why"></p>
+        <div class="path" id="m-path"></div>
+        <div class="visual" id="m-visual"></div>
+        <div class="res" id="m-res"></div>
+      </div>
+      <div class="col">
+        <div class="steps">
+          <h3>Le geste pas à pas <small id="m-count"></small></h3>
+          <ol id="m-steps"></ol>
+          <div class="ctrl">
+            <button class="btn btn-navy" id="m-step">Étape suivante</button>
+            <button class="btn btn-ghost" id="m-all">Tout afficher</button>
+          </div>
+        </div>
+        <p class="tip" id="m-tip"></p>
+        <div class="defi">
+          <div class="eyebrow">Défi chrono</div>
+          <p id="m-defi"></p>
+          <div class="row">
+            <button class="btn btn-gold" data-t="60">1 min</button>
+            <button class="btn btn-gold" data-t="120">2 min</button>
+            <button class="btn btn-gold" data-t="180">3 min</button>
+            <button class="btn valid" id="m-valid" aria-pressed="false">Mission validée</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roue -->
+  <section class="screen" id="s-roue" hidden>
+    <div class="roue">
+      <div class="eyebrow">La roue des missions</div>
+      <div class="drum" id="drum"><div class="n" id="r-n">?</div><div class="t" id="r-t">Qui sera la prochaine mission ?</div></div>
+      <div class="row">
+        <button class="btn btn-gold" id="r-spin">Lancer la roue</button>
+        <button class="btn btn-navy" id="r-go" hidden>Ouvrir la mission</button>
+      </div>
+      <p class="note" id="r-note">La roue ne tire que les missions pas encore validées.</p>
+    </div>
+  </section>
+
+  <!-- Quiz -->
+  <section class="screen" id="s-quiz" hidden>
+    <div class="quiz">
+      <div class="qcard">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+          <div class="eyebrow" id="q-num">Question 1 / 10</div>
+          <div class="qdots" id="q-dots"></div>
+        </div>
+        <h2 id="q-text"></h2>
+        <p style="margin:0;color:var(--muted)">Réponse à l'oral ou sur l'ardoise, puis on révèle.</p>
+        <div class="qans" id="q-ans" hidden><b id="q-a"></b><p id="q-ex"></p></div>
+        <div class="qctrl">
+          <button class="btn btn-gold" id="q-reveal">Révéler la réponse</button>
+          <button class="btn btn-ghost" id="q-prev">Précédente</button>
+          <button class="btn btn-navy" id="q-next">Question suivante</button>
+        </div>
+      </div>
+      <div class="score">
+        <div class="team or"><span class="lab">Équipe Or</span><span class="pts" id="sc-or">0</span><div class="pm"><button data-team="or" data-d="-1" aria-label="Retirer un point à l'équipe Or">−</button><button data-team="or" data-d="1" aria-label="Ajouter un point à l'équipe Or">+1</button></div></div>
+        <div class="team bleu"><span class="lab">Équipe Bleu</span><span class="pts" id="sc-bleu">0</span><div class="pm"><button data-team="bleu" data-d="-1" aria-label="Retirer un point à l'équipe Bleu">−</button><button data-team="bleu" data-d="1" aria-label="Ajouter un point à l'équipe Bleu">+1</button></div></div>
+        <button class="btn btn-ghost" id="sc-reset">Scores à zéro</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="timer" id="timer" hidden role="dialog" aria-label="Défi chrono">
+  <div>
+    <p id="t-defi"></p>
+    <div class="big" id="t-big">1:00</div>
+    <div class="row">
+      <button class="btn btn-gold" id="t-pause">Pause</button>
+      <button class="btn btn-ghost" id="t-close">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+const APPLE = 'https://support.apple.com/fr-fr/guide/ipad/welcome/ipados';
+const ICONS = {
+  photo:'<svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="15" rx="3" fill="#231657"/><circle cx="12" cy="12.5" r="4" fill="#DBA94A"/><rect x="7" y="3" width="6" height="3" rx="1" fill="#231657"/></svg>',
+  ipad:'<svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="3" fill="#231657"/><rect x="6" y="5" width="5" height="5" rx="1.2" fill="#DBA94A"/><rect x="13" y="5" width="5" height="5" rx="1.2" fill="#fff"/><rect x="6" y="12" width="12" height="5" rx="1.2" fill="#DBA94A"/></svg>',
+  ecole:'<svg viewBox="0 0 24 24"><path d="M12 2 2 8h20z" fill="#DBA94A"/><rect x="4" y="9" width="16" height="11" fill="#231657"/><rect x="10" y="13" width="4" height="7" fill="#DBA94A"/><rect x="2" y="20" width="20" height="2" fill="#231657"/></svg>',
+  formes:'<svg viewBox="0 0 24 24"><circle cx="9" cy="10" r="7" fill="#231657"/><rect x="11" y="11" width="11" height="11" rx="2" fill="#DBA94A"/></svg>',
+  google:'<svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2" fill="#231657"/><path d="M3 6l9 7 9-7" fill="none" stroke="#DBA94A" stroke-width="2.2"/></svg>',
+  partage:'<svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="4" fill="#231657"/><circle cx="17" cy="9" r="3.3" fill="#DBA94A"/><path d="M1 21c0-5 3-8 7-8s7 3 7 8z" fill="#231657"/><path d="M13 21c.3-4 2-6.5 4-6.5s4.5 2.5 5 6.5z" fill="#DBA94A"/></svg>'
+};
+const GROUPS = [
+  {id:'photo', nom:'Mes photos', icon:'photo'},
+  {id:'ipad', nom:'Mon iPad sur mesure', icon:'ipad'},
+  {id:'ecole', nom:'Les applis du collège', icon:'ecole'},
+  {id:'formes', nom:'Créer dans Pages', icon:'formes'},
+  {id:'google', nom:'Classroom, Gmail & agenda', icon:'google'},
+  {id:'partage', nom:'Rendre et collaborer', icon:'partage'}
+];
+
+const M = [
+ {n:1,g:'photo',court:'Annoter une photo',titre:"Je sais annoter, utiliser la loupe, ajouter une flèche, dessiner sur une photo.",
+  pourquoi:"Montrer précisément un détail : une partie d'un schéma, une erreur à corriger, un élément d'une œuvre.",
+  chemin:['Photos','Modifier','Annotation'],
+  etapes:["Ouvre l'app Photos et touche ta photo.","Touche « Modifier », puis le bouton Annotation (la pointe de stylo).","Touche « + » puis « Loupe » : fais-la glisser sur le détail. Le point vert règle le grossissement, le point bleu la taille.","Touche « + » puis « Ajouter une forme » et choisis la flèche. Déplace-la et oriente-la avec ses points.","Choisis un outil (stylo, surligneur) et une couleur pour dessiner, puis touche « OK »."],
+  astuce:"Tant que tu n'as pas touché « OK », la flèche « annuler » efface ton dernier trait.",
+  defi:"Prends ta trousse en photo, pose une loupe sur un objet et une flèche vers un autre.",
+  visuel:'annot', liens:[['Guide de l\'iPad (Apple)',APPLE]]},
+ {n:2,g:'photo',court:'Changer la date d\'une photo',titre:"Je sais modifier la date d'une photo après l'avoir prise.",
+  pourquoi:"Remettre une photo à sa place dans la photothèque, par exemple la photo du tableau prise le jour du cours.",
+  chemin:['Photos','ta photo','ⓘ','Ajuster'],
+  etapes:["Ouvre la photo dans l'app Photos.","Balaie la photo vers le haut, ou touche le bouton ⓘ.","À côté de la date, touche « Ajuster ».","Choisis la bonne date et la bonne heure.","Valide avec « Ajuster » : la photo se range au nouveau jour."],
+  astuce:"Dans le même menu, « Rétablir » remet la date d'origine.",
+  defi:"Change la date d'une photo pour le 1er septembre, vérifie où elle se range, puis remets la vraie date.",
+  visuel:'geste-photo', liens:[['Guide de l\'iPad (Apple)',APPLE]]},
+ {n:3,g:'ecole',court:'Installer une app avec Élève',titre:"Je sais installer des applications depuis l'application « Élève ».",
+  pourquoi:"Les applis du collège sont choisies et autorisées par l'établissement : on les installe là, sans compte personnel.",
+  chemin:['Élève','Rechercher','Installer'],
+  etapes:["Ouvre l'application Élève (et non l'App Store).","Parcours les catégories ou cherche l'app par son nom.","Touche « Installer ».","Attends la fin du téléchargement : l'app apparaît sur ton écran d'accueil."],
+  astuce:"Une app absente de la liste n'est pas autorisée au collège : demande à ton professeur.",
+  defi:"Installe l'app demandée par ton professeur et montre à ton voisin où elle est arrivée.",
+  visuel:null, liens:[]},
+ {n:4,g:'ecole',court:'Mettre à jour ses apps',titre:"Je sais faire une mise à jour des applications grâce à l'application Élève.",
+  pourquoi:"Une app à jour plante moins et reçoit les nouvelles fonctions dont tes professeurs ont besoin.",
+  chemin:['Élève','Mettre à jour'],
+  etapes:["Branche-toi au wifi du collège.","Ouvre l'application Élève.","Repère les apps qui affichent « Mettre à jour ».","Touche « Mettre à jour » et attends la fin avant d'ouvrir l'app."],
+  astuce:"Fais tes mises à jour en début d'heure, pas juste avant un contrôle.",
+  defi:"Vérifie si une app de ton iPad attend une mise à jour et lance-la.",
+  visuel:null, liens:[]},
+ {n:5,g:'google',court:'Chercher un mot-clé',titre:"Je sais chercher des mots-clés dans un document Classroom.",
+  pourquoi:"Retrouver en quelques secondes une définition, une date ou un nom dans un long document.",
+  chemin:['Classroom','document','⋯','Rechercher'],
+  etapes:["Ouvre le document depuis Classroom.","Dans un Google Docs : touche « ⋯ » puis « Rechercher et remplacer ». Dans un PDF : touche la loupe.","Tape ton mot-clé.","Passe d'un résultat à l'autre avec les flèches ‹ ›."],
+  astuce:"Cherche un mot court et précis : « lave » trouve aussi « laves ».",
+  defi:"Dans le dernier document de Classroom, compte combien de fois apparaît le mot choisi par ton professeur.",
+  visuel:'search', liens:[['Aide Google Classroom','https://support.google.com/edu/classroom/?hl=fr']]},
+ {n:6,g:'ipad',court:'Ouvrir une note rapide',titre:"Je sais ouvrir les notes rapides.",
+  pourquoi:"Noter une idée ou un lien sans quitter l'app dans laquelle tu travailles.",
+  chemin:['coin en bas à droite','glisser vers le centre'],
+  etapes:["Avec le doigt ou l'Apple Pencil, glisse en diagonale depuis le coin inférieur droit vers le centre.","Écris ta note. Tu peux ajouter le lien de la page ouverte.","Touche « OK » pour la ranger.","Retrouve-la dans l'app Notes, dossier « Notes rapides »."],
+  astuce:"Autre chemin : ajoute « Note rapide » dans le centre de contrôle (mission 7).",
+  defi:"Safari ouvert, crée une note rapide avec le titre de cette formation et le lien du site.",
+  visuel:'geste-note', liens:[['Guide de l\'iPad (Apple)',APPLE]]},
+ {n:7,g:'ipad',court:'Personnaliser le centre de contrôle',titre:"Je sais ajouter des raccourcis dans le centre de contrôle.",
+  pourquoi:"Avoir tes outils à portée d'un geste, depuis n'importe quelle app.",
+  chemin:['coin en haut à droite','+','Ajouter une commande'],
+  etapes:["Glisse vers le bas depuis le coin supérieur droit de l'écran.","Touche « + » en haut à gauche, ou maintiens le doigt sur un espace vide.","Touche « Ajouter une commande ».","Choisis la commande : Note rapide, Minuteur, Lampe, Enregistrement de l'écran…","Place-la où tu veux, puis touche un espace vide pour terminer."],
+  astuce:"Pour retirer une commande, passe en mode modification et touche le « − ».",
+  defi:"Ajoute « Minuteur » à ton centre de contrôle et lance un minuteur de 10 secondes.",
+  visuel:'geste-cc', liens:[['Centre de contrôle (Apple)','https://support.apple.com/fr-fr/guide/ipad/ipade572ca56/ipados']]},
+ {n:8,g:'ipad',court:'Un site sur l\'écran d\'accueil',titre:"Je sais ajouter le raccourci d'un site internet sur mon écran d'accueil.",
+  pourquoi:"Ouvrir l'ENT ou le portail du CDI en un toucher, comme une app.",
+  chemin:['Safari','Partager','Sur l\'écran d\'accueil'],
+  etapes:["Ouvre le site dans Safari.","Touche le bouton Partager (le carré avec une flèche).","Choisis « Sur l'écran d'accueil ».","Renomme le raccourci si besoin, puis touche « Ajouter »."],
+  astuce:"Donne un nom court au raccourci : il doit tenir sous l'icône.",
+  defi:"Mets le portail e-sidoc du CDI sur ton écran d'accueil.",
+  visuel:null, liens:[['Guide de l\'iPad (Apple)',APPLE]]},
+ {n:9,g:'ipad',court:'Faire lire son iPad',titre:"Je sais faire lire mon iPad en utilisant la fonctionnalité « Énoncer la sélection », dans plusieurs langues.",
+  pourquoi:"Écouter un texte pour réviser, vérifier une prononciation en langue vivante ou relire ses propres écrits.",
+  chemin:['Réglages','Accessibilité','Contenu énoncé','Énoncer la sélection'],
+  etapes:["Active « Énoncer la sélection » dans Réglages › Accessibilité › Contenu énoncé.","Dans « Voix », ajoute les langues utiles : anglais, espagnol, allemand…","Sélectionne un texte dans n'importe quelle app.","Touche « Énoncer » dans le menu qui apparaît.","Règle le débit vocal si la voix va trop vite."],
+  astuce:"Avec « Détecter la langue », l'iPad choisit seul la voix anglaise pour un texte anglais.",
+  defi:"Fais lire une phrase de ton manuel d'anglais par une voix anglaise, puis par la voix française. Écoute la différence.",
+  visuel:'speak', liens:[['Contenu énoncé (Apple)','https://support.apple.com/fr-fr/guide/ipad/ipad9a247097/ipados']]},
+ {n:10,g:'formes',court:'Combiner deux formes',titre:"Je sais, dans Pages, insérer deux formes et les combiner.",
+  pourquoi:"Fabriquer tes propres pictos pour une affiche, un exposé ou une carte mentale.",
+  chemin:['Pages','+','Formes','Format','Disposition'],
+  etapes:["Insère deux formes : « + » puis l'onglet Formes.","Superpose-les en partie.","Sélectionne les deux : touche la première, garde le doigt dessus et touche la seconde.","Touche le pinceau (Format) puis « Disposition ».","Choisis Unir, Intersection, Soustraire ou Exclure."],
+  astuce:"L'ordre compte pour « Soustraire » : la forme du dessus est retirée de celle du dessous.",
+  defi:"Fabrique une lune avec deux cercles, puis une bulle de BD avec un cercle et un triangle.",
+  visuel:'shapes', liens:[['Combiner des formes (Apple)','https://support.apple.com/fr-fr/guide/pages-ipad/tan719325126/ipados']]},
+ {n:11,g:'formes',court:'Enregistrer dans Mes formes',titre:"Je sais, dans Pages, enregistrer une nouvelle forme dans Mes formes.",
+  pourquoi:"Réutiliser ton picto dans tous tes documents, sans le refaire.",
+  chemin:['forme','toucher','Enregistrer dans Mes formes'],
+  etapes:["Touche ta forme pour la sélectionner.","Touche-la une deuxième fois pour ouvrir le menu.","Choisis « Enregistrer dans Mes formes ».","Pour la retrouver : « + », onglet Formes, catégorie « Mes formes »."],
+  astuce:"Connecté à iCloud, tes formes te suivent aussi dans Keynote et Numbers.",
+  defi:"Enregistre ta lune de la mission 10, puis insère-la dans un nouveau document.",
+  visuel:null, liens:[['Mes formes (Apple)','https://support.apple.com/fr-fr/guide/pages-ipad/tancb0d1c0b3/ipados']]},
+ {n:12,g:'google',court:'Programmer un rappel',titre:"Je sais mettre un rappel dans l'application « Rappels » ou « Google Agenda ».",
+  pourquoi:"Ne plus oublier un devoir à rendre, un livre à rapporter au CDI ou un contrôle.",
+  chemin:['Rappels','Nouveau rappel','date et heure'],
+  etapes:["Dans Rappels : touche « Nouveau rappel » et écris-le (« Rendre l'exposé d'histoire »).","Touche ⓘ ou l'icône calendrier pour ajouter une date et une heure, puis « OK ».","Dans Google Agenda : touche « + », puis « Tâche » ou « Événement ».","Indique la date, l'heure et la notification, puis « Enregistrer »."],
+  astuce:"Un rappel sans heure ne sonne pas : pense à cocher l'heure.",
+  defi:"Programme un rappel dans 3 minutes et attends qu'il sonne.",
+  visuel:null, liens:[['Aide Google Agenda','https://support.google.com/calendar/?hl=fr']]},
+ {n:13,g:'google',court:'Annoter un PDF dans Classroom',titre:"Je sais annoter des documents PDF depuis Classroom sans faire de capture d'écran.",
+  pourquoi:"Répondre directement sur le document du professeur et le rendre tel quel.",
+  chemin:['Classroom','devoir','PDF','Annoter'],
+  etapes:["Ouvre le devoir dans l'app Classroom.","Touche le PDF joint (ta copie personnelle).","Touche l'icône crayon pour annoter.","Écris, surligne, entoure.","Touche « Enregistrer », puis « Rendre »."],
+  astuce:"Pas de capture d'écran : ta copie annotée reste attachée au devoir, en bonne qualité.",
+  defi:"Ouvre le PDF test de Classroom, entoure le titre et écris ton prénom en haut, puis enregistre.",
+  visuel:null, liens:[['Aide Google Classroom','https://support.google.com/edu/classroom/?hl=fr']]},
+ {n:14,g:'ecole',court:'Se connecter à iCloud',titre:"Je sais me connecter à iCloud.",
+  pourquoi:"Sauvegarder tes documents Pages, Numbers et Keynote et pouvoir collaborer avec tes camarades.",
+  chemin:['Réglages','Se connecter','identifiant du collège'],
+  etapes:["Ouvre Réglages.","Touche « Se connecter » tout en haut.","Saisis l'identifiant et le mot de passe donnés par le collège.","Vérifie qu'iCloud Drive est activé pour Pages, Numbers et Keynote."],
+  astuce:"Si ton nom apparaît déjà en haut des Réglages, tu es connecté.",
+  defi:"Vérifie que ton nom apparaît en haut des Réglages et qu'iCloud Drive est activé.",
+  visuel:null, liens:[['Guide de l\'iPad (Apple)',APPLE]]},
+ {n:15,g:'ecole',court:'Universalis, Bug, e-sidoc',titre:"Je sais utiliser les applications « Universalis Junior », « Bug » et « e-sidoc ».",
+  pourquoi:"Chercher une information fiable et trouver un livre au CDI, sans passer par un moteur de recherche au hasard.",
+  chemin:['Universalis Junior','Bug','e-sidoc'],
+  etapes:["Ouvre Universalis Junior et cherche un mot-clé du cours.","Lis l'article et repère l'essentiel : définition, date, illustration.","Ouvre Bug et explore son contenu avec la méthode montrée par ton professeur.","Dans e-sidoc, cherche un livre sur le même sujet et note s'il est disponible au CDI."],
+  astuce:"Note toujours d'où vient ton information : c'est ta source.",
+  defi:"Course documentaire : une définition dans Universalis Junior et un livre dans e-sidoc sur le sujet donné, le plus vite possible.",
+  visuel:'ressources', liens:[]},
+ {n:16,g:'ipad',court:'Ajouter des widgets',titre:"Je sais mettre des widgets sur mon écran d'accueil.",
+  pourquoi:"Voir d'un coup d'œil tes rappels, ton agenda ou une note, sans ouvrir d'app.",
+  chemin:['appui long','Modifier','Ajouter des widgets'],
+  etapes:["Maintiens le doigt sur un espace vide de l'écran d'accueil jusqu'à ce que les icônes bougent.","Touche « Modifier » en haut à gauche, puis « Ajouter des widgets ».","Choisis un widget (Rappels, Calendrier, Notes…) et sa taille.","Touche « Ajouter le widget », place-le, puis touche « OK »."],
+  astuce:"Les widgets Rappels et Calendrier vont très bien avec la mission 12.",
+  defi:"Ajoute le widget Rappels pour voir tes devoirs à rendre dès l'écran d'accueil.",
+  visuel:'geste-widgets', liens:[['Widgets (Apple)','https://support.apple.com/fr-fr/guide/ipad/ipadb0de8630/ipados']]},
+ {n:17,g:'google',court:'Retrouver des mails',titre:"Je sais retrouver les messages d'une personne spécifique sur Gmail.",
+  pourquoi:"Retrouver la consigne envoyée par un professeur il y a trois semaines, sans faire défiler toute la boîte.",
+  chemin:['Gmail','Rechercher dans les e-mails'],
+  etapes:["Ouvre Gmail et touche la barre « Rechercher dans les e-mails ».","Tape le nom ou l'adresse de la personne.","Pour être précis, écris from: suivi de son adresse.","Affine avec les filtres : pièce jointe, date, non lu."],
+  astuce:"from: = « envoyé par ». to: = « envoyé à ».",
+  defi:"Retrouve le dernier mail envoyé par ton professeur principal.",
+  visuel:'gmail', liens:[['Opérateurs de recherche Gmail','https://support.google.com/mail/answer/7190?hl=fr']]},
+ {n:18,g:'partage',court:'Renommer un document',titre:"Je sais renommer un document avant de l'envoyer à un professeur, quel que soit son format.",
+  pourquoi:"Ton professeur reçoit 30 fichiers : un nom clair lui permet de savoir tout de suite que c'est le tien.",
+  chemin:['Fichiers','appui long','Renommer'],
+  etapes:["Dans Fichiers : maintiens le doigt sur le document, puis « Renommer ».","Dans Pages, Numbers ou Keynote : touche le titre en haut du document.","Dans Google Docs : touche « ⋯ », puis « Renommer ».","Utilise le modèle donné par ton professeur, par exemple Classe_NOM_Prénom_Sujet."],
+  astuce:"Évite « final », « v2 » ou « Sans titre » : ton nom et le sujet suffisent.",
+  defi:"Renomme ton dernier document selon le modèle de la classe, puis montre-le à ton voisin.",
+  visuel:'filename', liens:[['Guide de l\'iPad (Apple)',APPLE]]},
+ {n:19,g:'partage',court:'Collaborer à plusieurs',titre:"Je sais partager des documents Numbers ou d'une autre application Apple et collaborer avec mes camarades.",
+  pourquoi:"Travailler à plusieurs sur le même document, en même temps, sans s'envoyer dix versions.",
+  chemin:['Numbers','Partager','Collaborer','Peut modifier'],
+  etapes:["Ouvre ton document Numbers, Pages ou Keynote.","Touche le bouton Partager.","Choisis « Collaborer » (et non « Envoyer une copie »).","Dans les options, règle l'accès sur « Peut modifier ».","Envoie l'invitation : chaque camarade apparaît avec sa couleur dans le document."],
+  astuce:"Il faut être connecté à iCloud (mission 14) pour collaborer.",
+  defi:"À deux, remplissez le même tableau Numbers : chacun complète une colonne, en même temps.",
+  visuel:'collab', liens:[['Collaborer dans Pages (Apple)','https://support.apple.com/fr-fr/guide/pages-ipad/tan6df85201f/ipados']]}
+];
+
+const Q = [
+ {q:"Pour ouvrir une note rapide, je glisse depuis quel coin de l'écran ?",a:"Le coin inférieur droit",ex:"Glisse en diagonale vers le centre, au doigt ou à l'Apple Pencil. Mission 6."},
+ {q:"Dans quel réglage se cache « Énoncer la sélection » ?",a:"Réglages › Accessibilité › Contenu énoncé",ex:"Ensuite, on sélectionne un texte et on touche « Énoncer ». Mission 9."},
+ {q:"J'ai pris la photo du tableau lundi, elle est rangée à vendredi. Que fais-je ?",a:"ⓘ, puis « Ajuster » à côté de la date",ex:"On choisit la bonne date et la photo se range au bon jour. Mission 2."},
+ {q:"Où installe-t-on une app autorisée par le collège ?",a:"Dans l'application Élève",ex:"Pas dans l'App Store : les apps du collège sont validées par l'établissement. Mission 3."},
+ {q:"Vrai ou faux : pour annoter un PDF de Classroom, il faut d'abord faire une capture d'écran.",a:"Faux",ex:"On ouvre le PDF dans Classroom, on touche le crayon, on annote et on rend. Mission 13."},
+ {q:"Que dois-je taper dans Gmail pour ne voir que les mails envoyés par m.martin@… ?",a:"from:m.martin@…",ex:"from: signifie « envoyé par ». Mission 17."},
+ {q:"Dans Pages, que faut-il faire avant de pouvoir combiner deux formes ?",a:"Sélectionner les deux formes en même temps",ex:"Doigt sur la première, puis toucher la seconde, enfin Format › Disposition. Mission 10."},
+ {q:"Donne un bon nom pour ton exposé sur les volcans, à envoyer à ton professeur.",a:"4B_DUPONT_Lea_Volcans",ex:"Classe, nom, prénom, sujet. Jamais « Sans titre 3 » ni « final_final(2) ». Mission 18."},
+ {q:"Comment mettre le portail du CDI sur ton écran d'accueil ?",a:"Safari › Partager › « Sur l'écran d'accueil »",ex:"Le site s'ouvre ensuite en un toucher, comme une app. Mission 8."},
+ {q:"Pour travailler à trois sur le même tableau Numbers, que choisit-on dans le menu Partager ?",a:"« Collaborer », avec l'accès « Peut modifier »",ex:"« Envoyer une copie » crée des versions séparées. Il faut être connecté à iCloud. Mission 19."}
+];
+
+/* ---------- état ---------- */
+const store = {
+  get(k,d){try{const v=localStorage.getItem('dompteur2:'+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem('dompteur2:'+k,JSON.stringify(v))}catch(e){}}
+};
+let done = new Set(store.get('done',[]));
+let score = store.get('score',{or:0,bleu:0});
+let cur = 0, shown = 1, qi = 0, current = 'home';
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- navigation ---------- */
+function go(name){
+  current = name;
+  ['home','map','mission','roue','quiz'].forEach(s=>{$('#s-'+s).hidden = s!==name});
+  document.querySelectorAll('.nav button').forEach(b=>b.setAttribute('aria-current', b.dataset.go===name || (name==='mission'&&b.dataset.go==='map') ? 'true':'false'));
+  $('#main').scrollTop = 0;
+  if(name==='map') renderMap();
+  if(name==='quiz') renderQuiz();
+}
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+$('#go-map').onclick=()=>go('map'); $('#go-roue').onclick=()=>go('roue'); $('#go-quiz').onclick=()=>go('quiz');
+
+function updatePct(){
+  const p = Math.round(done.size/M.length*100);
+  $('#pctTxt').textContent = p+' %';
+  $('#ring').setAttribute('stroke-dasharray', (94.25*p/100).toFixed(2)+' 94.25');
+}
+
+/* ---------- carte ---------- */
+function renderMap(){
+  $('#groups').innerHTML = GROUPS.map(g=>{
+    const ms = M.filter(m=>m.g===g.id);
+    return `<div class="group"><h3>${ICONS[g.icon]}${g.nom}</h3><div class="tiles">${ms.map(m=>
+      `<button class="tile ${done.has(m.n)?'done':''}" data-m="${m.n}"><span class="num">${m.n}</span><span class="lbl">${esc(m.court)}</span><span class="chk" aria-label="${done.has(m.n)?'validée':'à faire'}">✓</span></button>`).join('')}</div></div>`;
+  }).join('');
+  $('#groups').querySelectorAll('.tile').forEach(t=>t.onclick=()=>openMission(+t.dataset.m));
+}
+$('#reset').onclick=function(){
+  if(this.dataset.armed){done.clear();store.set('done',[]);updatePct();renderMap();this.textContent='Remettre à zéro';delete this.dataset.armed}
+  else{this.dataset.armed='1';this.textContent='Confirmer la remise à zéro';setTimeout(()=>{if(this.dataset.armed){delete this.dataset.armed;this.textContent='Remettre à zéro'}},4000)}
+};
+
+/* ---------- mission ---------- */
+function openMission(n){
+  cur = M.findIndex(m=>m.n===n); shown = 1;
+  const m = M[cur], g = GROUPS.find(x=>x.id===m.g);
+  $('#m-num').textContent = m.n;
+  $('#m-group').textContent = 'Mission '+m.n+' / '+M.length+' · '+g.nom;
+  $('#m-title').textContent = m.titre;
+  $('#m-why').textContent = m.pourquoi;
+  $('#m-path').innerHTML = m.chemin.map(c=>`<span>${esc(c)}</span>`).join('<i>›</i>');
+  $('#m-steps').innerHTML = m.etapes.map(e=>`<li>${esc(e)}</li>`).join('');
+  $('#m-tip').innerHTML = '<b>Astuce · </b>'+esc(m.astuce);
+  $('#m-defi').textContent = m.defi;
+  $('#m-res').innerHTML = m.liens.length ? '<span>Pour aller plus loin :</span>'+m.liens.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join('') : '';
+  const v = $('#m-visual');
+  if(m.visuel && VIS[m.visuel]){v.hidden=false; v.innerHTML=''; VIS[m.visuel](v)} else {v.hidden=true; v.innerHTML=''}
+  syncValid(); paintSteps(); go('mission');
+}
+function paintSteps(){
+  const lis = $('#m-steps').children;
+  [...lis].forEach((li,i)=>li.classList.toggle('veiled', i>=shown));
+  $('#m-count').textContent = Math.min(shown,lis.length)+' / '+lis.length;
+  $('#m-step').disabled = shown>=lis.length;
+  $('#m-step').style.opacity = shown>=lis.length ? .5 : 1;
+}
+function stepFwd(){const l=M[cur].etapes.length; if(shown<l){shown++;paintSteps();return true} return false}
+function stepBack(){if(shown>1){shown--;paintSteps()}}
+$('#m-step').onclick=stepFwd;
+$('#m-all').onclick=()=>{shown=M[cur].etapes.length;paintSteps()};
+$('#m-prev').onclick=()=>openMission(M[(cur-1+M.length)%M.length].n);
+$('#m-next').onclick=()=>openMission(M[(cur+1)%M.length].n);
+function syncValid(){const on=done.has(M[cur].n);$('#m-valid').setAttribute('aria-pressed',on);$('#m-valid').textContent=on?'Mission validée ✓':'Valider la mission'}
+$('#m-valid').onclick=()=>{const n=M[cur].n; done.has(n)?done.delete(n):done.add(n); store.set('done',[...done]); syncValid(); updatePct()};
+
+/* ---------- visuels ---------- */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function ipadFrame(inner){
+  let icons=''; const cols=['#231657','#DBA94A','#3a2a86','#c9c5de'];
+  for(let r=0;r<3;r++)for(let c=0;c<6;c++){icons+=`<rect x="${50+c*52}" y="${48+r*56}" width="34" height="34" rx="8" fill="${cols[(r*6+c)%4]}" class="ico"/>`}
+  return `<svg viewBox="0 0 400 280" role="img"><rect x="8" y="8" width="384" height="264" rx="26" fill="#231657"/><rect x="24" y="24" width="352" height="232" rx="12" fill="#f1f0f7"/><g class="icons">${icons}</g>${inner}</svg>`;
+}
+function finger(path,dur){
+  if(reduce) { const p=path.split(/[ML ]+/).filter(Boolean); return `<circle cx="${p[p.length-2]}" cy="${p[p.length-1]}" r="14" fill="#DBA94A" stroke="#fff" stroke-width="3"/>`}
+  return `<circle r="14" fill="#DBA94A" stroke="#fff" stroke-width="3" opacity="0"><animateMotion dur="${dur}s" repeatCount="indefinite" path="${path}" keyPoints="0;0;1;1" keyTimes="0;0.1;0.5;1" calcMode="linear"/><animate attributeName="opacity" dur="${dur}s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.1;0.5;0.6;1"/></circle>`;
+}
+function appear(dur){return reduce?'':`<animate attributeName="opacity" dur="${dur}s" repeatCount="indefinite" values="0;0;1;1;0" keyTimes="0;0.45;0.55;0.92;1"/>`}
+const VIS = {
+  'geste-note'(el){
+    el.innerHTML = ipadFrame(`<g opacity="${reduce?1:0}">${appear(3.2)}<rect x="196" y="96" width="160" height="140" rx="12" fill="#fff" stroke="#DBA94A" stroke-width="3"/><rect x="210" y="112" width="70" height="10" rx="5" fill="#231657"/><rect x="210" y="134" width="130" height="7" rx="3.5" fill="#c9c5de"/><rect x="210" y="150" width="110" height="7" rx="3.5" fill="#c9c5de"/><rect x="210" y="166" width="120" height="7" rx="3.5" fill="#c9c5de"/><rect x="300" y="208" width="44" height="18" rx="9" fill="#DBA94A"/><text x="322" y="221" text-anchor="middle" font-size="11" font-weight="700" fill="#231657" font-family="Atkinson Hyperlegible, Verdana, sans-serif">OK</text></g>`+finger('M368 248 L272 166',3.2))
+      +'<p class="vcap">Le geste : du coin inférieur droit vers le centre. La note flotte au-dessus de l\'app ouverte.</p>';
+  },
+  'geste-cc'(el){
+    let tg=''; for(let r=0;r<3;r++)for(let c=0;c<3;c++){tg+=`<circle cx="${262+c*38}" cy="${74+r*40}" r="14" fill="${(r+c)%3===0?'#DBA94A':'#3a2a86'}"/>`}
+    el.innerHTML = ipadFrame(`<g opacity="${reduce?1:0}">${appear(3)}<rect x="236" y="44" width="128" height="180" rx="16" fill="#231657" opacity=".96"/>${tg}<rect x="248" y="190" width="104" height="22" rx="11" fill="#fff"/><text x="300" y="205" text-anchor="middle" font-size="11" font-weight="700" fill="#231657" font-family="Atkinson Hyperlegible, Verdana, sans-serif">+ Ajouter</text></g>`+finger('M352 30 L352 130',3))
+      +'<p class="vcap">Le geste : vers le bas, depuis le coin supérieur droit. Le « + » permet d\'ajouter une commande.</p>';
+  },
+  'geste-widgets'(el){
+    const wig = reduce?'':`<animateTransform attributeName="transform" type="rotate" values="0 200 140;0 200 140;.8 200 140;-.8 200 140;.8 200 140;0 200 140" keyTimes="0;.35;.5;.65;.8;1" dur="3s" repeatCount="indefinite"/>`;
+    el.innerHTML = ipadFrame(`<g opacity="${reduce?1:0}">${appear(3)}<rect x="36" y="32" width="64" height="20" rx="10" fill="#231657"/><text x="68" y="46" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Atkinson Hyperlegible, Verdana, sans-serif">Modifier</text><rect x="210" y="212" width="150" height="34" rx="12" fill="#DBA94A"/><text x="285" y="234" text-anchor="middle" font-size="12" font-weight="700" fill="#231657" font-family="Atkinson Hyperlegible, Verdana, sans-serif">Widget Rappels</text></g>`
+      + (reduce?`<circle cx="120" cy="230" r="14" fill="#DBA94A" stroke="#fff" stroke-width="3"/>`:`<circle cx="120" cy="230" r="10" fill="#DBA94A" stroke="#fff" stroke-width="3"><animate attributeName="r" values="10;10;22;14;10" keyTimes="0;.1;.35;.45;1" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.1;.4;.5;1" dur="3s" repeatCount="indefinite"/></circle>`))
+      .replace('<g class="icons">','<g class="icons">'+wig)
+      +'<p class="vcap">Le geste : un appui long sur un espace vide. Les icônes se mettent à bouger : tu es en mode modification.</p>';
+  },
+  'geste-photo'(el){
+    el.innerHTML = `<svg viewBox="0 0 400 280" role="img"><rect x="8" y="8" width="384" height="264" rx="26" fill="#231657"/><rect x="24" y="24" width="352" height="232" rx="12" fill="#0f0a2a"/><rect x="70" y="40" width="260" height="150" rx="6" fill="#3a2a86"/><rect x="88" y="58" width="224" height="22" rx="4" fill="#f1f0f7" opacity=".9"/><rect x="88" y="92" width="150" height="10" rx="5" fill="#f1f0f7" opacity=".6"/><rect x="88" y="112" width="180" height="10" rx="5" fill="#f1f0f7" opacity=".6"/><rect x="88" y="132" width="120" height="10" rx="5" fill="#f1f0f7" opacity=".6"/>
+      <g opacity="${reduce?1:0}">${appear(3)}<rect x="40" y="176" width="320" height="72" rx="14" fill="#fff"/><text x="58" y="204" font-size="15" font-weight="700" fill="#231657" font-family="Atkinson Hyperlegible, Verdana, sans-serif">lundi 2 novembre · 10:14</text><rect x="276" y="188" width="70" height="24" rx="12" fill="#DBA94A"/><text x="311" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#231657" font-family="Atkinson Hyperlegible, Verdana, sans-serif">Ajuster</text><text x="58" y="230" font-size="12" fill="#5d5880" font-family="Atkinson Hyperlegible, Verdana, sans-serif">IMG_2048 · Appareil photo de l'iPad</text></g>${finger('M200 240 L200 150',3)}</svg>`
+      +'<p class="vcap">Le geste : balayer la photo vers le haut fait apparaître la date et le bouton « Ajuster ».</p>';
+  },
+  'annot'(el){
+    const scene = `<rect x="0" y="0" width="360" height="220" fill="#cfe0f2"/><circle cx="290" cy="50" r="24" fill="#DBA94A"/><path d="M0 220 L90 110 L150 170 L220 80 L360 220Z" fill="#3a2a86"/><path d="M200 105 L220 80 L240 105 L228 100 L220 110 L212 100Z" fill="#fff"/><rect x="40" y="170" width="16" height="30" fill="#5d3b1f"/><circle cx="48" cy="160" r="20" fill="#2f8a5b"/>`;
+    el.innerHTML = `<svg viewBox="0 0 400 260" role="img" aria-label="Photo annotée avec une loupe, une flèche et un dessin"><defs><clipPath id="lp"><circle cx="240" cy="110" r="44"/></clipPath><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#DBA94A"/></marker></defs>
+      <g transform="translate(20 20)">${scene}<g clip-path="url(#lp)" transform="translate(-20 -20)"><g transform="translate(240 110) scale(1.9) translate(-240 -110) translate(20 20)">${scene}</g></g></g>
+      <circle cx="240" cy="110" r="44" fill="none" stroke="#231657" stroke-width="5"/><circle cx="284" cy="110" r="6" fill="#2f8a5b" stroke="#fff" stroke-width="2"/><circle cx="240" cy="154" r="6" fill="#3a6fd8" stroke="#fff" stroke-width="2"/>
+      <path d="M110 70 Q90 120 64 166" fill="none" stroke="#DBA94A" stroke-width="7" stroke-linecap="round" marker-end="url(#ah)"/>
+      <path d="M260 210 q20 -18 40 0 t40 0" fill="none" stroke="#c0392b" stroke-width="5" stroke-linecap="round"/>
+      <rect x="20" y="20" width="360" height="220" fill="none" stroke="#231657" stroke-width="3" rx="4"/></svg>
+      <p class="vcap">La loupe (point vert : grossissement, point bleu : taille), une flèche et un trait dessiné à main levée.</p>`;
+  },
+  'shapes'(el){
+    const ops = {Unir:'union',Intersection:'inter',Soustraire:'sub',Exclure:'xor'};
+    el.innerHTML = `<svg viewBox="0 0 400 220" role="img" aria-label="Deux formes combinées"><defs><clipPath id="cA"><circle cx="165" cy="110" r="80"/></clipPath><mask id="mB"><rect width="400" height="220" fill="#fff"/><circle cx="245" cy="110" r="80" fill="#000"/></mask></defs><g id="shp"></g></svg>
+      <div class="chips" role="group" aria-label="Choisir une combinaison">${Object.keys(ops).map((k,i)=>`<button aria-pressed="${i===0}" data-op="${ops[k]}">${k}</button>`).join('')}<button aria-pressed="false" data-op="avant">Avant</button></div>
+      <p class="vcap" id="shp-cap"></p>`;
+    const draw = op=>{
+      const A='<circle cx="165" cy="110" r="80"', B='<circle cx="245" cy="110" r="80"';
+      const caps={avant:'Deux formes superposées, encore séparées.',union:'Unir : les deux formes fusionnent en une seule.',inter:'Intersection : on garde seulement la partie commune.',sub:'Soustraire : la forme du dessus est retirée. Voilà une lune.',xor:'Exclure : on garde tout, sauf la partie commune.'};
+      let s='';
+      if(op==='avant') s=`${A} fill="#231657"/>${B} fill="#DBA94A" opacity=".9"/>`;
+      if(op==='union') s=`${A} fill="#231657"/>${B} fill="#231657"/>`;
+      if(op==='inter') s=`${A} fill="none" stroke="#c9c5de" stroke-dasharray="6 6" stroke-width="2"/>${B} fill="none" stroke="#c9c5de" stroke-dasharray="6 6" stroke-width="2"/><g clip-path="url(#cA)">${B} fill="#231657"/></g>`;
+      if(op==='sub') s=`${B} fill="none" stroke="#c9c5de" stroke-dasharray="6 6" stroke-width="2"/><g mask="url(#mB)">${A} fill="#231657"/></g>`;
+      if(op==='xor') s=`<path fill="#231657" fill-rule="evenodd" d="M85 110a80 80 0 1 0 160 0a80 80 0 1 0 -160 0Z M165 110a80 80 0 1 0 160 0a80 80 0 1 0 -160 0Z"/>`;
+      el.querySelector('#shp').innerHTML=s; el.querySelector('#shp-cap').textContent=caps[op];
+    };
+    el.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{el.querySelectorAll('.chips button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw(b.dataset.op)});
+    draw('union');
+  },
+  'search'(el){
+    const txt = "Lors d'une éruption effusive, la lave fluide s'écoule en longues coulées. Dans une éruption explosive, la lave visqueuse bouche la cheminée : les gaz s'accumulent puis projettent des cendres et des bombes volcaniques. Les coulées de laves peuvent parcourir plusieurs kilomètres.";
+    el.innerHTML = `<div class="search"><label for="kw" style="font-weight:700">Mot-clé</label><input id="kw" value="lave" autocomplete="off"><output id="kwn"></output></div><p class="doc" id="kwdoc"></p><p class="vcap">Essaie : éruption, coulées, gaz… C'est exactement ce que fait la recherche dans un document.</p>`;
+    const upd=()=>{
+      const k=el.querySelector('#kw').value.trim(); let n=0;
+      let html=esc(txt);
+      if(k.length>1){const re=new RegExp('('+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'); html=html.replace(re,m=>{n++;return '<mark>'+m+'</mark>'})}
+      el.querySelector('#kwdoc').innerHTML=html; el.querySelector('#kwn').textContent=n+(n>1?' résultats':' résultat');
+    };
+    el.querySelector('#kw').addEventListener('input',upd); upd();
+  },
+  'speak'(el){
+    const L=[['fr-FR','Français',"Bonjour, je suis la voix de ton iPad. Sélectionne un texte et je te le lis."],['en-GB','Anglais',"Hello! Select any text and I will read it aloud for you."],['es-ES','Espagnol',"¡Hola! Selecciona un texto y te lo leo en voz alta."],['de-DE','Allemand',"Hallo! Markiere einen Text und ich lese ihn dir vor."]];
+    el.innerHTML = `<div class="speak">${L.map((l,i)=>`<div class="line"><button data-i="${i}">Écouter</button><div><span class="flag">${l[1]}</span>${esc(l[2])}</div></div>`).join('')}</div><p class="vcap" id="spk-cap">Démonstration avec la synthèse vocale du navigateur : sur l'iPad, c'est la même idée avec « Énoncer ».</p>`;
+    el.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+      try{const l=L[+b.dataset.i];speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(l[2]);u.lang=l[0];u.rate=.95;const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.replace('_','-').startsWith(l[0].slice(0,2)));if(v)u.voice=v;speechSynthesis.speak(u)}
+      catch(e){el.querySelector('#spk-cap').textContent="La lecture à voix haute n'est pas disponible dans ce navigateur : faites la démonstration directement sur un iPad."}
+    });
+  },
+  'gmail'(el){
+    el.innerHTML = `<div class="gmail"><div class="gbar"><span aria-hidden="true">🔍</span><span>from:m.martin@stemariebeaucamps.fr<span class="caret"></span></span></div><div class="chips"><button aria-pressed="true">De</button><button aria-pressed="false">Pièce jointe</button><button aria-pressed="false">Date</button><button aria-pressed="false">Non lus</button></div></div><p class="vcap">Exemple d'adresse fictive. from: affiche seulement les mails envoyés par cette personne ; les filtres affinent la recherche.</p>`;
+    el.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));
+  },
+  'filename'(el){
+    const F=[['Sans titre 3.pages',0,"Ton professeur ne sait ni qui l'envoie, ni de quoi il parle."],['exposé final FINAL (2).pages',0,"« final » et « (2) » ne disent ni qui tu es, ni le sujet."],['4B_DUPONT_Lea_Volcans.pages',1,"Classe, nom, prénom, sujet : on sait tout, tout de suite."],['IMG_2048.jpeg',0,"Le nom donné automatiquement par l'iPad : à renommer avant l'envoi."]];
+    el.innerHTML = `<div class="eyebrow" style="margin-bottom:.5rem">Jeu : quel fichier envoyer au professeur ?</div><div class="fn">${F.map((f,i)=>`<button data-i="${i}">${esc(f[0])}</button>`).join('')}<p class="verdict" id="fn-v" aria-live="polite"></p></div>`;
+    el.querySelectorAll('.fn button').forEach(b=>b.onclick=()=>{const f=F[+b.dataset.i];b.classList.add(f[1]?'good':'bad');el.querySelector('#fn-v').textContent=(f[1]?'Bravo ! ':'Raté. ')+f[2]});
+  },
+  'ressources'(el){
+    el.innerHTML = `<div class="cards3"><div><b>Universalis Junior</b><p>L'encyclopédie en ligne écrite pour les collégiens : des articles fiables, illustrés, faciles à citer.</p></div><div><b>Bug</b><p>L'app présentée par ton professeur : repère comment on y cherche un contenu.</p></div><div><b>e-sidoc</b><p>Le catalogue du CDI : tu cherches un livre, tu sais s'il est disponible et où il est rangé.</p></div></div><p class="vcap">Le réflexe : l'encyclopédie pour comprendre, e-sidoc pour approfondir avec un livre.</p>`;
+  },
+  'collab'(el){
+    const cells=[]; for(let r=0;r<5;r++)for(let c=0;c<4;c++){cells.push(`<rect x="${40+c*80}" y="${40+r*32}" width="80" height="32" fill="${r===0?'#231657':'#fff'}" stroke="#c9c5de"/>`)}
+    const h=['Prénom','Livre','Pages','Avis'].map((t,i)=>`<text x="${80+i*80}" y="61" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Atkinson Hyperlegible, Verdana, sans-serif">${t}</text>`).join('');
+    const cur=(x,y,col,name,d)=>`<g>${reduce?'':`<animateTransform attributeName="transform" type="translate" values="0 0;0 32;0 64;0 32;0 0" dur="${d}s" repeatCount="indefinite"/>`}<rect x="${x}" y="${y}" width="80" height="32" fill="none" stroke="${col}" stroke-width="3"/><rect x="${x}" y="${y-16}" width="${name.length*8+12}" height="16" rx="4" fill="${col}"/><text x="${x+6}" y="${y-4}" font-size="11" font-weight="700" fill="#fff" font-family="Atkinson Hyperlegible, Verdana, sans-serif">${name}</text></g>`;
+    el.innerHTML = `<svg viewBox="0 0 400 220" role="img" aria-label="Tableau Numbers partagé avec deux curseurs de couleur">${cells.join('')}${h}${cur(40,104,'#c99428','Léa',5)}${cur(200,104,'#3a6fd8','Hugo',6.5)}</svg><p class="vcap">En collaboration, chacun voit les autres travailler en direct, chacun avec sa couleur.</p>`;
+  }
+};
+
+/* ---------- roue ---------- */
+let spinning=false, landed=null;
+$('#r-spin').onclick=()=>{
+  if(spinning) return;
+  const pool = M.filter(m=>!done.has(m.n));
+  if(!pool.length){$('#r-n').textContent='★';$('#r-t').textContent='Toutes les missions sont validées : badge Dompteur iPad 2 mérité !';$('#r-go').hidden=true;return}
+  spinning=true; $('#r-go').hidden=true; $('#drum').classList.add('rolling');
+  const target = pool[Math.floor(Math.random()*pool.length)];
+  let i=0, steps = reduce?1:20+Math.floor(Math.random()*6), delay=35;
+  const tick=()=>{
+    const m = i>=steps-1 ? target : M[Math.floor(Math.random()*M.length)];
+    $('#r-n').textContent=m.n; $('#r-t').textContent=m.court;
+    if(++i<steps){delay*=1.08;setTimeout(tick,delay)}
+    else{spinning=false;landed=target.n;$('#drum').classList.remove('rolling');$('#r-t').textContent=target.titre;$('#r-go').hidden=false;beep(660,.12)}
+  };
+  tick();
+};
+$('#r-go').onclick=()=>landed&&openMission(landed);
+
+/* ---------- quiz ---------- */
+function renderQuiz(){
+  const q=Q[qi];
+  $('#q-num').textContent='Question '+(qi+1)+' / '+Q.length;
+  $('#q-text').textContent=q.q; $('#q-a').textContent=q.a; $('#q-ex').textContent=q.ex;
+  $('#q-ans').hidden=true; $('#q-reveal').hidden=false;
+  $('#q-dots').innerHTML=Q.map((_,i)=>`<i class="${i===qi?'cur':i<qi?'on':''}"></i>`).join('');
+  $('#q-prev').disabled = qi===0;
+  $('#q-next').textContent = qi===Q.length-1 ? 'Recommencer' : 'Question suivante';
+  paintScore();
+}
+function reveal(){if($('#q-ans').hidden){$('#q-ans').hidden=false;$('#q-reveal').hidden=true;return true}return false}
+$('#q-reveal').onclick=reveal;
+$('#q-next').onclick=()=>{qi=(qi+1)%Q.length;renderQuiz()};
+$('#q-prev').onclick=()=>{if(qi>0){qi--;renderQuiz()}};
+function paintScore(){$('#sc-or').textContent=score.or;$('#sc-bleu').textContent=score.bleu}
+document.querySelectorAll('[data-team]').forEach(b=>b.onclick=()=>{score[b.dataset.team]=Math.max(0,score[b.dataset.team]+ +b.dataset.d);store.set('score',score);paintScore()});
+$('#sc-reset').onclick=()=>{score={or:0,bleu:0};store.set('score',score);paintScore()};
+
+/* ---------- chrono ---------- */
+let tLeft=0,tInt=null,paused=false,actx=null;
+function beep(f,d){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;o.connect(g);g.connect(actx.destination);g.gain.setValueAtTime(.18,actx.currentTime);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+d);o.start();o.stop(actx.currentTime+d)}catch(e){}}
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+function startTimer(sec){
+  tLeft=sec;paused=false;$('#t-defi').textContent=M[cur].defi;$('#t-big').textContent=fmt(tLeft);$('#t-big').classList.remove('end');$('#t-pause').textContent='Pause';$('#timer').hidden=false;beep(880,.08);
+  clearInterval(tInt);tInt=setInterval(()=>{if(paused)return;tLeft--;$('#t-big').textContent=fmt(Math.max(0,tLeft));if(tLeft<=3&&tLeft>0)beep(660,.1);if(tLeft<=0){clearInterval(tInt);$('#t-big').textContent='Stop !';$('#t-big').classList.add('end');beep(440,.6)}},1000);
+  $('#t-close').focus();
+}
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>startTimer(+b.dataset.t));
+$('#t-pause').onclick=()=>{paused=!paused;$('#t-pause').textContent=paused?'Reprendre':'Pause'};
+$('#t-close').onclick=()=>{clearInterval(tInt);$('#timer').hidden=true};
+
+/* ---------- plein écran & clavier ---------- */
+function fs(){try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
+$('#fs').onclick=fs;
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,textarea'))return;
+  if(!$('#timer').hidden){if(e.key==='Escape')$('#t-close').click();return}
+  if(e.key==='f'||e.key==='F'){fs();return}
+  if(current==='mission'){
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(!stepFwd()&&e.key==='ArrowRight')$('#m-next').click()}
+    else if(e.key==='ArrowLeft'){e.preventDefault();stepBack()}
+    else if(e.key==='Escape'){go('map')}
+  } else if(current==='quiz'){
+    if(e.key===' '||e.key==='ArrowRight'){e.preventDefault();if(!reveal())$('#q-next').click()}
+    else if(e.key==='ArrowLeft'){e.preventDefault();$('#q-prev').click()}
+    else if(e.key==='Escape'){go('home')}
+  } else if(current==='roue'){
+    if(e.key===' '){e.preventDefault();$('#r-spin').click()}
+    else if(e.key==='Enter'&&!$('#r-go').hidden){$('#r-go').click()}
+  } else if(e.key==='Escape'){go('home')}
+});
+
+updatePct(); go('home');
+})();
+</script>
+
+</body></html>
